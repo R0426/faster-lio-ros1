@@ -1,0 +1,40 @@
+<launch>
+    <!-- ===============================
+         FAST-LIO for Ouster OS1-32
+         (ROS1 + catkin_ws 맞춤 버전)
+         =============================== -->
+
+    <!-- RViz ON/OFF -->
+    <arg name="rviz" default="true" />
+
+    <!-- Load Ouster YAML params -->
+    <rosparam command="load" file="$(find faster_lio)/config/ouster32.yaml" />
+
+    <!-- [중요] Bag 파일 토픽과 완전히 맞춤 -->
+    <param name="common/lid_topic" value="/ouster/points" />
+    <param name="common/imu_topic" value="/ouster/imu" />
+
+    <!-- Ouster는 반드시 feature extract 필요 -->
+    <param name="feature_extract_enable" type="bool" value="1"/>
+
+    <!-- ICP / 맵 최적화 설정 (너의 환경 기준으로 안정화) -->
+    <param name="point_filter_num_" type="int" value="4"/>
+    <param name="max_iteration" type="int" value="3" />
+    <param name="filter_size_surf" type="double" value="0.5" />
+    <param name="filter_size_map"  type="double" value="0.5" />
+    <param name="cube_side_length" type="double" value="1000" />
+    <param name="runtime_pos_log_enable" type="bool" value="0" />
+
+    <!-- Odometry publish topic 명시 (GT sync와 맞추기 위해 강제) -->
+    <param name="publish/odom_topic" value="/Odometry"/>
+
+    <!-- Run FAST-LIO -->
+    <node pkg="faster_lio" type="run_mapping_online" name="laserMapping" output="screen" />
+
+    <!-- Visualization -->
+    <group if="$(arg rviz)">
+        <node pkg="rviz" type="rviz" name="rviz"
+              args="-d $(find faster_lio)/rviz_cfg/loam_livox.rviz" />
+    </group>
+
+</launch>
