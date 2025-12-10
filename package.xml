@@ -1,0 +1,22 @@
+<package>
+  <name>sync_gt</name>
+  <version>0.0.1</version>
+  <description>PoseNet GT generator</description>
+
+  <maintainer email="you@example.com">You</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>rospy</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>message_filters</build_depend>
+  <build_depend>cv_bridge</build_depend>
+
+  <run_depend>rospy</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>message_filters</run_depend>
+  <run_depend>cv_bridge</run_depend>
+</package>
